@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche Pratique Aliments - Ingrid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            padding: 15px;
+            min-width: 600px;
+            overflow-x: auto;
+        }
+
+        .guide-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            min-width: 580px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .categories-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .category-card {
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .category-icon {
+            font-size: 24px;
+            margin-right: 12px;
+        }
+
+        .category-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .category-target {
+            font-size: 12px;
+            color: #6c757d;
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .foods-section {
+            margin-bottom: 15px;
+        }
+
+        .foods-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .foods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+        }
+
+        .food-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .food-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .avoid-section {
+            background: linear-gradient(135deg, #f8d7da, #f1c2c3);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .avoid-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #721c24;
+            margin-bottom: 6px;
+        }
+
+        .avoid-text {
+            font-size: 11px;
+            color: #721c24;
+            line-height: 1.4;
+        }
+
+        .note-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .note-text {
+            font-size: 12px;
+            color: #856404;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        .summary-section {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .summary-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            opacity: 0.9;
+        }
+
+        .summary-foods {
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Animations */
+        .guide-container {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category-card {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                min-width: auto;
+                padding: 10px;
+            }
+            
+            .guide-container {
+                min-width: auto;
+                padding: 20px;
+            }
+            
+            .foods-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="header">
+            <div class="header-title">Fiche Pratique - Aliments à privilégier</div>
+            <div class="header-subtitle">Ingrid L.</div>
+        </div>
+
+        <div class="categories-container">
+            <!-- Protéines -->
+            <div class="category-card proteins-card">
+                <div class="category-header">
+                    <div class="category-icon">🍗</div>
+                    <div class="category-title">Protéines</div>
+                    <div class="category-target">(~120 g/j)</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-label">✅ À privilégier :</div>
+                    <div class="foods-grid">
+                        <div class="food-item">🥚 Œufs (1-2/jour)</div>
+                        <div class="food-item">🐟 Colin, cabillaud, merlu</div>
+                        <div class="food-item">🍗 Dinde, poulet (vapeur/grillé)</div>
+                        <div class="food-item">🥫 Thon naturel (sans huile)</div>
+                        <div class="food-item">🌱 Steaks végétaux protéinés</div>
+                        <div class="food-item">🥛 Yaourt soja nature</div>
+                    </div>
+                </div>
+                <div class="avoid-section">
+                    <div class="avoid-label">⚠️ Éviter :</div>
+                    <div class="avoid-text">Viande rouge, poissons gras (sardine/maquereau/saumon), fruits de mer</div>
+                </div>
+            </div>
+
+            <!-- Glucides -->
+            <div class="category-card carbs-card">
+                <div class="category-header">
+                    <div class="category-icon">🍚</div>
+                    <div class="category-title">Glucides complexes</div>
+                    <div class="category-target">(~280-300 g/j)</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-label">✅ Sources principales :</div>
+                    <div class="foods-grid">
+                        <div class="food-item">🍚 Riz complet</div>
+                        <div class="food-item">🌾 Quinoa</div>
+                        <div class="food-item">🍝 Pâtes complètes</div>
+                        <div class="food-item">🍠 Patate douce</div>
+                        <div class="food-item">🥔 Pommes de terre</div>
+                        <div class="food-item">🍞 Pain complet</div>
+                    </div>
+                </div>
+                <div class="note-section">
+                    <div class="note-text">👉 Ces féculents assurent énergie stable et récupération après sport</div>
+                </div>
+            </div>
+
+            <!-- Légumes -->
+            <div class="category-card vegetables-card">
+                <div class="category-header">
+                    <div class="category-icon">🥦</div>
+                    <div class="category-title">Légumes & fibres</div>
+                    <div class="category-target">(&gt;30 g fibres/j)</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-label">✅ À privilégier (ses préférés) :</div>
+                    <div class="foods-grid">
+                        <div class="food-item">🥦 Brocolis</div>
+                        <div class="food-item">🥒 Courgettes</div>
+                        <div class="food-item">🥕 Carottes</div>
+                        <div class="food-item">🍆 Aubergines</div>
+                        <div class="food-item">🌶️ Poivrons</div>
+                        <div class="food-item">🍅 Tomates</div>
+                    </div>
+                </div>
+                <div class="note-section">
+                    <div class="note-text">👉 Légumes cuits en priorité → digestion facilitée. Légumes crus en petite portion seulement</div>
+                </div>
+            </div>
+
+            <!-- Fruits -->
+            <div class="category-card fruits-card">
+                <div class="category-header">
+                    <div class="category-icon">🍏</div>
+                    <div class="category-title">Fruits</div>
+                    <div class="category-target">(3 portions/j)</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-label">✅ Bon choix pour elle :</div>
+                    <div class="foods-grid">
+                        <div class="food-item">🍏 Pomme</div>
+                        <div class="food-item">🥝 Kiwi</div>
+                        <div class="food-item">🍌 Banane (pré/post-sport)</div>
+                        <div class="food-item">🍊 Clémentine</div>
+                        <div class="food-item">🍓 Fruits rouges</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lipides -->
+            <div class="category-card lipids-card">
+                <div class="category-header">
+                    <div class="category-icon">🥑</div>
+                    <div class="category-title">Lipides de qualité</div>
+                    <div class="category-target">(~70 g/j)</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-label">✅ Huiles adaptées :</div>
+                    <div class="foods-grid">
+                        <div class="food-item">🌼 Colza (cuisson douce)</div>
+                        <div class="food-item">🌱 Lin (à froid uniquement)</div>
+                        <div class="food-item">🌻 Tournesol/pépins raisin</div>
+                        <div class="food-item">🥑 Avocat (si toléré)</div>
+                    </div>
+                </div>
+                <div class="avoid-section">
+                    <div class="avoid-label">⚠️ Éviter :</div>
+                    <div class="avoid-text">Huile d'olive, noix, fruits à coque</div>
+                </div>
+            </div>
+
+            <!-- Extras -->
+            <div class="category-card extras-card">
+                <div class="category-header">
+                    <div class="category-icon">🍫</div>
+                    <div class="category-title">Extras & plaisirs contrôlés</div>
+                </div>
+                <div class="foods-section">
+                    <div class="foods-grid">
+                        <div class="food-item">🍫 Chocolat noir 85% (1-2 carrés/jour)</div>
+                        <div class="food-item">🧀 Fromage frais léger (occasionnel)</div>
+                        <div class="food-item">Collations : fruits + pain + yaourt soja</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Résumé -->
+        <div class="summary-section">
+            <div class="summary-title">✅ Résumé pratique</div>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">Protéines</div>
+                    <div class="summary-foods">Colin, dinde, œufs, thon, soja</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Glucides</div>
+                    <div class="summary-foods">Riz complet, quinoa, pâtes complètes, patate douce</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Légumes favoris</div>
+                    <div class="summary-foods">Brocolis, courgettes, ratatouille variée</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Fruits</div>
+                    <div class="summary-foods">Pomme, kiwi, banane, clémentine, fruits rouges</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Lipides</div>
+                    <div class="summary-foods">Huiles colza/lin/tournesol, avocat</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">Extras</div>
+                    <div class="summary-foods">Chocolat noir, fromage frais, snacks sains</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animation séquentielle des catégories
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryCards = document.querySelectorAll('.category-card');
+            
+            categoryCards.forEach((card, index) => {
+                card.style.animationDelay = `${0.2 + (index * 0.15)}s`;
+            });
+
+            // Animation des aliments
+            const foodItems = document.querySelectorAll('.food-item');
+            foodItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.3s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                }, 1000 + (index * 30));
+            });
+        });
+    </script>
+</body>
+</html>
